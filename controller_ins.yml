@@ -1,0 +1,23 @@
+---
+- name: Install NTP and OpenStack Components
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install NTP
+      apt:
+        name: chrony
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install SQL Database
+      apt:
+        name: mysql-server
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install Message Queue
+      apt:
+        name: rabbitmq-server
+        state: present
+      when: ansible_os_family == "Debian"
+

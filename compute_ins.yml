@@ -1,0 +1,29 @@
+---
+- name: COMPUTE
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install OpenStack packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - python3-openstackclient
+        - nova-compute
+        - neutron-server
+        - glance
+        - keystone
+      when: ansible_os_family == "Debian"
+
+    - name: Install SQL Database
+      apt:
+        name: mysql-server
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install Message Queue
+      apt:
+        name: rabbitmq-server
+        state: present
+      when: ansible_os_family == "Debian"
+
